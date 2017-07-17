@@ -1,4 +1,4 @@
-CFLAGS = -Wall -fpic -coverage -lm
+CFLAGS =  -fpic -coverage -lm
 
 rngs.o: rngs.h rngs.c
 	gcc -c rngs.c -g  $(CFLAGS)
@@ -33,7 +33,74 @@ runtests: testDrawCard
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-all: playdom player testDrawCard testBuyCard badTestDrawCard
+#isGameOverTest
+unittest1: unittest1.c dominion.o rngs.o 
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
+
+#getCostTest
+unittest2: unittest2.c dominion.o rngs.o
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
+
+#update coins test
+unittest3: unittest3.c dominion.o rngs.o
+	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+
+#hand card test
+unittest4: unittest4.c dominion.o rngs.o
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+
+#smithy card test
+cardtest1: cardtest1.c dominion.o rngs.o
+	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+
+#adventurer card test
+cardtest2: cardtest2.c dominion.o rngs.o
+	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+
+#great hall test
+cardtest3: cardtest3.c dominion.o rngs.o
+	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
+
+#village test
+cardtest4: cardtest4.c dominion.o rngs.o
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+
+all: playdom player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+
+unittestresults.out: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 dominion.c
+	echo "Results for running dominion tests" > unittestresults.out
+
+	echo "unittest1.c" >> unittestresults.out
+	./unittest1 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "unittest2.c" >> unittestresults.out
+	./unittest2 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "unittest3.c" >> unittestresults.out
+	./unittest3 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "unittest4.c" >> unittestresults.out
+	./unittest4 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "cardtest1.c" >> unittestresults.out
+	./cardtest1 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+	
+	echo "cardtest2.c" >> unittestresults.out
+	./cardtest2 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "cardtest3.c" >> unittestresults.out
+	./cardtest3 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
+
+	echo "cardtest4.c" >> unittestresults.out
+	./cardtest3 >> unittestresults.out
+	gcov -b -c dominion.c >> unittestresults.out
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe unittestresults.out unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
