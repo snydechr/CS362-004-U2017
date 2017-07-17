@@ -73,6 +73,7 @@ struct gameState {
   int playedCardCount;
 };
 
+char* cardName(int cardIndex);	//returns the name of the corresponding card as a string
 /* All functions return -1 on failure, and DO NOT CHANGE GAME STATE;
    unless specified for other return, return 0 on success */
 
@@ -127,5 +128,8 @@ int scoreFor(int player, struct gameState *state);
 int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
+void copyGameState(struct gameState *game1, struct gameState *game2);
+
+int comparePlayerState(struct gameState *game1, struct gameState *game2, int player);
 
 #endif
