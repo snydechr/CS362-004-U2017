@@ -34,7 +34,7 @@ char *inputString()
 
 	for(i = 0; i <= randNum1; i++)
 	{
-		randNum2 = rand() % 6;
+		randNum2 = rand() % 9;
 		inputString[i] = inputs[randNum2];
 	}
 	 
