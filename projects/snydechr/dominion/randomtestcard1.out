@@ -5183,10 +5183,10 @@ Taken at least once:100.00% of 10
 No calls
 
 Function 'comparePlayerState'
-Lines executed:44.44% of 36
-Branches executed:100.00% of 18
-Taken at least once:72.22% of 18
-Calls executed:16.67% of 18
+Lines executed:30.56% of 36
+Branches executed:88.89% of 18
+Taken at least once:55.56% of 18
+Calls executed:0.00% of 18
 
 Function 'compareGameState'
 Lines executed:0.00% of 5
@@ -5195,9 +5195,9 @@ Taken at least once:0.00% of 2
 No calls
 
 File 'dominion.c'
-Lines executed:27.10% of 701
-Branches executed:24.38% of 484
-Taken at least once:21.90% of 484
-Calls executed:12.71% of 118
+Lines executed:26.39% of 701
+Branches executed:23.97% of 484
+Taken at least once:21.28% of 484
+Calls executed:10.17% of 118
 Creating 'dominion.c.gcov'
 
