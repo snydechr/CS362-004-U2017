@@ -66,10 +66,18 @@ cardtest4: cardtest4.c dominion.o rngs.o
 	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
 
 #random adventurer test
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
+	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+
+#random village test
 randomtestcard1: randomtestcard1.c dominion.o rngs.o
 	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
 
-all: playdom player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+#random great hall test
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+
+all: playdom player unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 randomtestcard1 randomtestcard2 randomtestadventurer
 
 unittestresults.out: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 dominion.c
 	echo "Results for running dominion tests" > unittestresults.out
@@ -106,5 +114,50 @@ unittestresults.out: unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2
 	./cardtest3 >> unittestresults.out
 	gcov -b -c dominion.c >> unittestresults.out
 
+
+#randomTestResults
+randomtestresults.out: randomtestcard1 randomtestcard2 randomtestadventurer dominion.c
+	echo "Results for running dominion random tests" > randomtestresults.out
+
+	echo "randomtestcard1.c" >> randomtestresults.out
+	./randomtestcard1 >> randomtestresults.out
+	gcov -b -c -f dominion.c >> randomtestresults.out
+
+	echo "randomtestcard2.c" >> randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	gcov -b -c -f dominion.c >> randomtestresults.out
+
+	echo "randomtestadventurer.c" >> randomtestresults.out
+	./randomtestadventurer >> randomtestresults.out
+	gcov -b -c -f dominion.c >> randomtestresults.out
+
+#random test results for adventurer
+randomtestadventurer.out: randomtestadventurer dominion.c
+	echo "Results for running random adventurer test" > randomtestadventurer.out
+
+	echo "randomtestadventurer.c" >> randomtestadventurer.out
+	./randomtestadventurer >> randomtestadventurer.out
+	gcov -b -c -f dominion.c >> randomtestadventurer.out
+
+
+#random test for village
+randomtestcard1.out: randomtestcard1 dominion.c
+	echo "Results for running random village test" > randomtestcard1.out
+
+
+	echo "randomtestcard1.c" >> randomtestcard1.out
+	./randomtestcard1 >> randomtestcard1.out
+	gcov -b -c -f dominion.c >> randomtestcard1.out
+
+#random test for great hall
+randomtestcard2.out: randomtestcard2 dominion.c
+	echo "Results for running random great hall test" > randomtestcard2.out
+
+	echo "randomtestcard2.c" >> randomtestcard2.out
+	./randomtestcard2 >> randomtestcard2.out
+	gcov -b -c -f dominion.c >> randomtestcard2.out
+	
+
+
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe unittestresults.out unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe unittestresults.out unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 randomtestcard1 randomtestcard2 randomtestadventurer

@@ -1,3 +1,3 @@
 this is the readme file for chris' project directory
 
-This iteration contains the update for assignment 3 for unit testing
+This iteration contains the updates for assignment 4 random card testing

@@ -21,8 +21,8 @@ int main()
 	//check player deck after drawing
 	//make sure that the number of cards in the deck decreases and the number of discards increases
 	//
-	//check the state of other players prior to playing of smithy
-	//check the state of other players after playing smithy
+	//check the state of other players prior to playing of adventurer
+	//check the state of other players after playing adventurer
 	//
 	//check the state of the victory piles (estate 1, duchy 2, province 3)
 	//check the state of the kingdom piles (get the indices from the chosen kingdom cards in the init)

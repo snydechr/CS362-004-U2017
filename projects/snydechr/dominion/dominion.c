@@ -21,42 +21,62 @@ int comparePlayerState(struct gameState *game1, struct gameState *game2, int pla
 	if(game1->handCount[player] != game2->handCount[player])
 	{
 		notSame++;
-		printf("---- handCount difference ----");
+		printf("---- handCount difference ----\n");
+		printf("updated hand count: %d\n", game1->handCount[player]);
+		printf("original hand count: %d\n", game2->handCount[player]);
 	}
 
 	if(game1->deckCount[player] != game2->deckCount[player])
 	{
 		notSame++;
-		printf("---- deckCount difference ----");
+		printf("---- deckCount difference ----\n");
+		printf("original deck count: %d\n", game2->deckCount[player]);
+		printf("updated deck count: %d\n", game1->deckCount[player]);
 
 	}
 
 	if(game1->discardCount[player] != game2->discardCount[player])
 	{
 		notSame++;
-		printf("---- discardCount difference ----");
+
+		printf("---- discardCount difference ----\n");
+		printf("original discard count: %d\n", game2->discardCount[player]);
+		printf("updated discard count: %d\n", game1->discardCount[player]);
 
 	}
-	for(i = 0;i < MAX_HAND; i++)
+	for(i = 0;i < game1->handCount[player]; i++)
 	{
-		if(game1->hand[player] != game2->hand[player])
+		if(game1->hand[player][i] != game2->hand[player][i])
 		{
-			//notSame++;
-			//printf("---- hand difference ----");
+			notSame++;
+			printf("---- hand difference ----\n");
 		}
 	}
 
-	for(j = 0; j < MAX_DECK; j++)
+	for(j = 0; j < game1->deckCount[player]; j++)
 	{
 		if(game1->deck[player][j] != game2->deck[player][j])
 		{
 			notSame++;
-			printf("---- deck difference ----");
+			printf("---- deck difference ----\n");
+			printf("original: %d at index: %d\n", game2->deck[player][j], j);
+			printf("updated: %d at indes: %d\n\n", game1->deck[player][j], j);
 		}
+	}
+	for(j = 0; j < game1->discardCount[player]; j++)
+	{
 		if(game1->discard[player][j] != game2->discard[player][j])
 		{
 			notSame++;
-			printf("---- discard difference ----");
+			/**/
+			printf("---- discard difference ----\n");
+			printf("original discard count: %d\n",game1->discardCount[player]);
+			printf("updated discard count: %d\n", game2->discardCount[player]);
+
+			printf("original discard card: %d\n", game1->discard[player][j]);	
+			printf("updated discard card: %d\n\n", game2->discard[player][j]);
+
+			
 		}
 	}
 
@@ -72,7 +92,7 @@ void copyGameState(struct gameState *game1, struct gameState *game2)
 		game2->embargoTokens[i] = game1->embargoTokens[i]; 
 
 	}
-	for(j = 0; j < (MAX_PLAYERS); j++)
+	for(j = 0; j < (game1->numPlayers); j++)
 	{
 		game2->handCount[j] = game1->handCount[j];
 		game2->deckCount[j] = game1->deckCount[j];
@@ -80,6 +100,7 @@ void copyGameState(struct gameState *game1, struct gameState *game2)
 		for(k = 0; k < MAX_DECK; k++)
 		{
 			game2->deck[j][k] = game1->deck[j][k];
+			
 			game2->discard[j][k] = game1->discard[j][k];
 			if(j == (MAX_PLAYERS - 1))
 				game2->playedCards[k] = game1->playedCards[k];
@@ -366,6 +387,7 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct 
 	  	//	{
 	  	//	  drawCard(i, state);
 	  	//	}
+		
 	}
 
 	//set embargo tokens to 0 for all supply piles
@@ -867,6 +889,7 @@ int smithy_action(struct gameState *state, int handPos, int currentPlayer)
 int adventurer_action(struct gameState *state, int handPos, int currentPlayer)
 {
 	int cardDrawn, drawntreasure, z;
+	drawntreasure = 0;
 	z = 0;
 	int temphand[MAX_HAND];
 	//adventurer actions here
@@ -875,6 +898,8 @@ int adventurer_action(struct gameState *state, int handPos, int currentPlayer)
 		if (state->deckCount[currentPlayer] <1)
 		{//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
+			//printf("deck is empty inside adventurer, reshuffling\n");
+			//getchar();
 		}
 		drawCard(currentPlayer, state);
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
@@ -883,10 +908,12 @@ int adventurer_action(struct gameState *state, int handPos, int currentPlayer)
 		{
 			//printf("The treasure drawn is a: %d\n", cardDrawn);
 	  		drawntreasure++;
+			//printf("Card Drawn is either gold or silver\n");
+			//getchar();
 		}
 		else if(cardDrawn == copper)
 		{
-			drawntreasure += 1;
+			drawntreasure += 2;
 		}
 		else
 		{
@@ -907,20 +934,27 @@ int adventurer_action(struct gameState *state, int handPos, int currentPlayer)
 
 int great_hall_action(struct gameState *state, int currentPlayer, int handPos)
 {
+	int i;
 	//+1 Card
 	drawCard(currentPlayer, state);
-		
+
 	//+1 Actions
 	state->numActions++;
-		
+	/*
+	printf("The currently randomly chosen player is player %d\n", currentPlayer);
+	for( i = 0; i < state->numPlayers; i++)
+	{
+		printf("hand count for player %d before discardCard() called : %d\n", i, state->handCount[i]);
+	}*/
 	//discard card from hand
 	discardCard(handPos, currentPlayer, state, 0);
-
-	//add a copper coin
-
-	//updateCoins(currentPlayer, &state, 15);//fixme
-	//state->coins = state->coins +10;
-	//gainCard(estate, state, 0, currentPlayer);
+	//
+	/*
+	for( i = 0; i < state->numPlayers; i++)
+	{
+		printf("hand count for player %d after discardCard() called: %d\n", i, state->handCount[i]);
+	}
+	*/
 	drawCard(currentPlayer, state);
 	return 0;
 	
@@ -1566,6 +1600,7 @@ int discardCard(int handPos, int currentPlayer, struct gameState *state, int tra
 	{
 		//add card to played pile
 	 	state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
+		//printf("made it here");
 		state->playedCardCount++;
 	}
 
