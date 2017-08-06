@@ -1,0 +1,18 @@
+Unit Tests:
+		Unit Test 1 isGameOver():	DONE
+		Unit Test 2 cardCost():		DONE
+		Unit Test 3 updateCoins():	DONE		//make sure to discuss the improvements and reduction in test cases in order to make it an actual unittest removing any sort of random element. Discuss the differentiation of the various inputs and how the range chosen was for a reason to make it a true unit test
+		Unit Test 4 handCard():		DONE		//See unit test 3
+
+		Card Test 1 (Smithy):		DONE	
+		Card Test 2 (Adventurer):	DONE
+		Card Test 3 (Great Hall):	DONE
+		Card Test 4 (Village):		DONE	
+
+Random Tests:
+		Random Test Adventurer:		DONE
+		Random Test Great Hall:		DONE
+		Random Test Village:		DONE
+
+Bug List:
+		Change the line numbers to match the correct updated values

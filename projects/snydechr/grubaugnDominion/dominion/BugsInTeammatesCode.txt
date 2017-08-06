@@ -1,0 +1,33 @@
+isGameOver()
+	Description: Game does not end if one of the empty piles has a card assignment value higher than 24 which includes salvager, sea hag, and treasure map
+	Conditions: Supply piles of salvager, sea hag, or treasure map may be empty in combination with two other card supply piles
+	Expected Results: Game ends under these conditions
+	Actual Results: Game does not end under these conditions
+	Location: Loop checking for empty supply piles does not cover the last 3 indexes of possible cards
+
+Smithy Card
+	Description: Incorrect card discarded at end of smithy action due to handPos variable being incremented by one
+	Conditions: All conditions for playing of smithy card
+	Expected Results: smithy cad is discarded after being played
+	Actual Results: smithy card is not discarded after being played, instead the card at hand index one	greater than the smithy card is discarded
+	Location: line 891 in dominion.c
+
+Adventurer Card
+	Description: At runtime, the counter for the temporary hand that maintains all of the discarded cards until the player has received two new treasures does not start at zero. Due to the fact that it is not initialized to zero results in the value effectively being random.
+	Conditions: All conditions for playing Adventurer card.
+	Expected Results: Cards that are drawn in the process of drawing treasure cards should be discarded.
+	Actual Results: The random value provides the wrong count value for the cards that have been drawn that are not treasure cards. The random value may then cause a segmentation fault while attempting to access an index in the tempHand array that does not exist. The secondary effect of this is that the discard pile increases by a random amount with potentially random values if all of the indexes within the tempHand array do exist.
+	Location: adventurerfunc line 855 in dominion.c
+
+	Description: The Adventurer does not discard itself at the end of each turn.
+	Conditions: All conditions for playing Adventurer card.
+	Expected Results: Adventurer card is discarded after being played
+	Actual Results: handcount of the player using it is higher than it should be and the adventurer card can be used as many times as the holder desires due to this bug.
+	Location: adventurerfunc (the call does not exist)
+
+Village Card
+	Description: Number of actions for the current player increases by an incorrect amount
+	Conditions: All conditions for plaing Village card
+	Expected Results: Number of actions increment by 2 for the player that plays the card
+	Actual Results: Number of actions increases by 1 instead of 2
+	Location: villagefunc line 907
