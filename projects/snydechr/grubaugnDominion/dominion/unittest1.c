@@ -35,7 +35,7 @@ int main()
 		//for(i = 0; i < 27; i+=1)
 		//{
 		
-			for(j = 0; j < 2; j++)	//victory loop if zero make sure end game returns a different value
+			for(j = 0; j < 1; j++)	//victory loop if zero make sure end game returns a different value
 			{
 				for(numCopper = 0; numCopper < 2; numCopper++) //47
 				{
@@ -45,10 +45,17 @@ int main()
 						{
 							//memset(&game, 23, sizeof(struct gameState));	
 							initSuccess = initializeGame(i, kingCards, seed, &game);
-							for(i = 0; i < 27; i++)
+							
+							for(i = 0; i < 27; i+=1)
 							{
-								game.supplyCount [i] = j;
+								game.supplyCount [i] = 1;
 							}
+							
+							game.supplyCount[25] = 0;	//testing corner cases of empty hands
+							game.supplyCount[26] = 0;
+							game.supplyCount[10] = 0;
+
+
 							game.supplyCount[curse] = numCurseCards;
 							game.supplyCount[copper] = numCopper;
 							game.supplyCount[silver] = numSilver;
@@ -65,11 +72,16 @@ int main()
 									for(numCards = 0; numCards < 2; numCards++)
 									{
 										supplyCountCount = 0;
-										game.supplyCount[k] = numCards;
+										//game.supplyCount[k] = 0;
+										//game.supplyCount[k] = numCards;
+										//below checks the game ending conditions
 										for(x = 0; x < 27; x++)	//27
 										{
 											if(game.supplyCount[x] == 0)
+											{
 												supplyCountCount++;
+												//getchar();
+											}
 										}
 										if(supplyCountCount >= 3)
 											gameOver = 1;
